@@ -25,7 +25,7 @@ resource "aws_instance" "vault" {
 # }
 
 module "vault_bootstrap" {
-  source              = "git@github.com:serene-wozniak/terraform-module-bootstrap.git//ansible_bootstrap?ref=ansible-facts"
+  source              = "git@github.com:serene-wozniak/terraform-module-bootstrap.git//ansible_bootstrap?ref=v0.0.1"
   ansible_source_repo = "git@github.com:serene-wozniak/terraform-module-vault.git"
   ansible_role        = "vault"
 
