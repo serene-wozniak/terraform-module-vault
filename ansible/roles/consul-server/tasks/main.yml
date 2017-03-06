@@ -1,0 +1,64 @@
+---
+
+# See:  http://www.adambonny.com/installing-consul-server-on-centos/
+
+- name: Install unzip
+  yum:
+    name: unzip
+    state: latest
+  become: true
+
+- name: Download consul
+  get_url:
+    url: "{{ consul_download_url }}"
+    dest: "{{ consul_download_dir }}"
+    checksum: "{{ consul_download_checksum }}"
+  become: true
+
+- name: Unpack consul
+  unarchive:
+    copy: no
+    src: "{{ consul_download_dir }}/{{ consul_download_file }}"
+    dest: "{{ consul_install_dir }}"
+    creates: "consul"
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+
+- name: Create consul datadir
+  file:
+    path: "{{ consul_data_dir }}"
+    state: directory
+  become: true
+
+- name: Create consul config directories
+  file:
+    path: "/etc/consul.d/{{ item }}/"
+    state: directory
+  with_items:
+  - bootstrap
+  - server
+  become: true
+
+- name: Create consul config files
+  template:
+    src: "{{ item }}.config.json.j2"
+    dest: "/etc/consul.d/{{ item }}/config.json"
+    mode: 0644
+  with_items:
+  - bootstrap
+  - server
+  notify:
+  - Restart consul
+  become: true
+
+- name: Add consul systemd unit
+  template:
+    src: consul.service.j2
+    dest: /etc/systemd/system/consul.service
+    mode: 0644
+  notify:
+  - Reload systemd
+  - Restart consul
+  become: true
