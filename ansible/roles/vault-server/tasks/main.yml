@@ -22,11 +22,8 @@
 
 - name: Create vault config directories
   file:
-    path: "/etc/vault.d/{{ item }}/"
+    path: "/etc/vault.d"
     state: directory
-  with_items:
-  - bootstrap
-  - server
 
 - name: Create vault config files
   template:
