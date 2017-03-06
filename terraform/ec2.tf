@@ -35,6 +35,7 @@ module "vault_bootstrap" {
     vault_postgres_password = "${var.vault_password}"
     vault_postgres_endpoint = "${aws_db_instance.vault_db.endpoint}"
     vault_postgres_sslmode  = "disable"
+    consul_join_node        = "${ var.ha ? "vault.${var.route53_domain}" : "vault-01.${var.route53_domain}" }"
   }
 
   ssh_ca_publickey      = "${var.ssh_user_ca_publickey}"
