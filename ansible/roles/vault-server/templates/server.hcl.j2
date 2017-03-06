@@ -4,7 +4,7 @@ ha_backend "consul" {
 }
 
 backend "postgresql" {
-  connection_url = "postgres://{{vault_postgres_username}}:{{vault_postgres_password}}@{{vault_postgres_host}}:{{vault_postgres_port}}/{{vault_postgres_databse}}?sslmode={{vault_postgres_ssl_mode}}"
+  connection_url = "postgres://{{ansible_local.bootstrap.ansible.vault_postgres_username}}:{{ansible_local.bootstrap.ansible.vault_postgres_password}}@{{ansible_local.bootstrap.ansible.vault_postgres_endpoint}}/vault?sslmode={{ansible_local.bootstrap.ansible.vault_postgres_sslmode}}"
 }
 
 listener "tcp" {
