@@ -20,11 +20,6 @@
     group: root
     mode: 0755
 
-- name: Create vault datadir
-  file:
-    path: "{{ vault_data_dir }}"
-    state: directory
-
 - name: Create vault config directories
   file:
     path: "/etc/vault.d/{{ item }}/"
