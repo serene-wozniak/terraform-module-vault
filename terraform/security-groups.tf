@@ -17,6 +17,13 @@ resource "aws_security_group" "vault-access" {
     cidr_blocks = ["${var.permitted_cidrs}"]
   }
 
+  ingress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    self      = true
+  }
+
   egress {
     from_port   = 0
     to_port     = 0

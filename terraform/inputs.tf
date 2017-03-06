@@ -23,3 +23,4 @@ variable "ha" {
 # Config Management
 variable "ssh_user_ca_publickey" {}
 variable "git_private_key" {}
+variable "consul_encryption_key" {}

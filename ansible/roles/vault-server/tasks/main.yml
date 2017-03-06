@@ -41,3 +41,17 @@
   notify:
   - Reload systemd
   - Restart vault
+
+- name: Install postgres
+  yum:
+    name: postgresql
+    state: latest
+
+- name: Place the vaultsetup.sql script
+  template:
+    src: vault-table.sql.j2
+    dest: /tmp/vaultsetup.sql
+    mode: 0600
+
+- name: Run Postgres creation script
+  shell: PGPASSWORD={{vault_postgres_password}} psql -H {{vault_postgres_endpoint | replace(':5432','')}} -U {{vault_postgres_username}} vault -f /tmp/vaultsetup.sql
