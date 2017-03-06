@@ -8,6 +8,8 @@ variable "instance_type" {}
 variable "domain" {}
 variable "instance_profile_id" {}
 
+variable "vault_password" {}
+
 variable "permitted_cidrs" {
   type = "list"
 }

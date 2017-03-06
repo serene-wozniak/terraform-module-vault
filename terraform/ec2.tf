@@ -30,7 +30,11 @@ module "vault_bootstrap" {
   ansible_role        = "vault"
 
   ansible_facts = {
-    vault_ha = "${var.ha}"
+    vault_ha                = "${var.ha}"
+    vault_postgres_username = "vault"
+    vault_postgres_password = "${var.vault_postgres_password}"
+    vault_postgres_endpoint = "${aws_rds_instance.vault_db.endpoint}"
+    vault_postgres_sslmode  = "disable"
   }
 
   ssh_ca_publickey      = "${var.ssh_user_ca_publickey}"
