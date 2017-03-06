@@ -1,19 +1,15 @@
 ---
 
-# See:  http://www.adambonny.com/installing-consul-server-on-centos/
-
 - name: Install unzip
   yum:
     name: unzip
     state: latest
-  become: true
 
 - name: Download consul
   get_url:
     url: "{{ consul_download_url }}"
     dest: "{{ consul_download_dir }}"
     checksum: "{{ consul_download_checksum }}"
-  become: true
 
 - name: Unpack consul
   unarchive:
@@ -24,34 +20,24 @@
     owner: root
     group: root
     mode: 0755
-  become: true
 
 - name: Create consul datadir
   file:
     path: "{{ consul_data_dir }}"
     state: directory
-  become: true
 
 - name: Create consul config directories
   file:
-    path: "/etc/consul.d/{{ item }}/"
+    path: "/etc/consul.d/server/"
     state: directory
-  with_items:
-  - bootstrap
-  - server
-  become: true
 
 - name: Create consul config files
   template:
-    src: "{{ item }}.config.json.j2"
-    dest: "/etc/consul.d/{{ item }}/config.json"
+    src: "server.config.json.j2"
+    dest: "/etc/consul.d/server/config.json"
     mode: 0644
-  with_items:
-  - bootstrap
-  - server
   notify:
   - Restart consul
-  become: true
 
 - name: Add consul systemd unit
   template:
@@ -61,4 +47,3 @@
   notify:
   - Reload systemd
   - Restart consul
-  become: true
