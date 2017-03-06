@@ -32,8 +32,8 @@ module "vault_bootstrap" {
   ansible_facts = {
     vault_ha                = "${var.ha}"
     vault_postgres_username = "vault"
-    vault_postgres_password = "${var.vault_postgres_password}"
-    vault_postgres_endpoint = "${aws_rds_instance.vault_db.endpoint}"
+    vault_postgres_password = "${var.vault_password}"
+    vault_postgres_endpoint = "${aws_db_instance.vault_db.endpoint}"
     vault_postgres_sslmode  = "disable"
   }
 
