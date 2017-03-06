@@ -5,7 +5,7 @@
   "data_dir" : "{{ consul_data_dir }}",
   "advertise_addr" : "{{ ansible_eth0.ipv4.address }}",
   "bind_addr" : "{{ ansible_eth0.ipv4.address }}",
-  "retry_join" : [ {% for node in groups['consul'] %}"{{ hostvars[node].ansible_eth0.ipv4.address }}"{% if not loop.last %},{% endif %}{% endfor %} ],
+  "retry_join" : ["{{ consul_join_node }}"],
   "retry_interval": "10s",
   "skip_leave_on_interrupt": true,
   "leave_on_terminate": false,
