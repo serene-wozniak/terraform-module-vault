@@ -1,0 +1,13 @@
+ha_backend "consul" {
+  address = "127.0.0.1:8500"
+  path    = "vault"
+}
+
+backend "postgresql" {
+  connection_url = "postgres://{{ansible_local.bootstrap.ansible.vault_postgres_username}}:{{ansible_local.bootstrap.ansible.vault_postgres_password}}@{{ansible_local.bootstrap.ansible.vault_postgres_endpoint}}/vault?sslmode={{ansible_local.bootstrap.ansible.vault_postgres_sslmode}}"
+}
+
+listener "tcp" {
+  address     = "127.0.0.1:8200"
+  tls_disable = 1
+}

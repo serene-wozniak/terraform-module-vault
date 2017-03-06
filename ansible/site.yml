@@ -1,0 +1,10 @@
+- name: Consul server
+  hosts: consul
+  become: true
+  pre_tasks:
+  - name: Gather facts
+    ec2_facts:
+
+  roles:
+  - consul-server
+  - vault-server

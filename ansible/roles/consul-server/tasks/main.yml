@@ -1,0 +1,49 @@
+---
+
+- name: Install unzip
+  yum:
+    name: unzip
+    state: latest
+
+- name: Download consul
+  get_url:
+    url: "{{ consul_download_url }}"
+    dest: "{{ consul_download_dir }}"
+    checksum: "{{ consul_download_checksum }}"
+
+- name: Unpack consul
+  unarchive:
+    copy: no
+    src: "{{ consul_download_dir }}/{{ consul_download_file }}"
+    dest: "{{ consul_install_dir }}"
+    creates: "consul"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create consul datadir
+  file:
+    path: "{{ consul_data_dir }}"
+    state: directory
+
+- name: Create consul config directories
+  file:
+    path: "/etc/consul.d/server/"
+    state: directory
+
+- name: Create consul config files
+  template:
+    src: "server.config.json.j2"
+    dest: "/etc/consul.d/server/config.json"
+    mode: 0644
+  notify:
+  - Restart consul
+
+- name: Add consul systemd unit
+  template:
+    src: consul.service.j2
+    dest: /etc/systemd/system/consul.service
+    mode: 0644
+  notify:
+  - Reload systemd
+  - Restart consul

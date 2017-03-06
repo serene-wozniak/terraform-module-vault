@@ -8,6 +8,10 @@ variable "instance_type" {}
 variable "domain" {}
 variable "instance_profile_id" {}
 
+variable "vault_password" {}
+variable "route53_zone_id" {}
+variable "route53_domain" {}
+
 variable "permitted_cidrs" {
   type = "list"
 }
