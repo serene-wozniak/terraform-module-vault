@@ -1,0 +1,51 @@
+---
+- name: Install unzip
+  yum:
+    name: unzip
+    state: latest
+
+- name: Download vault
+  get_url:
+    url: "{{ vault_download_url }}"
+    dest: "{{ vault_download_dir }}"
+    checksum: "{{ vault_download_checksum }}"
+
+- name: Unpack vault
+  unarchive:
+    copy: no
+    src: "{{ vault_download_dir }}/{{ vault_download_file }}"
+    dest: "{{ vault_install_dir }}"
+    creates: "vault"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create vault datadir
+  file:
+    path: "{{ vault_data_dir }}"
+    state: directory
+
+- name: Create vault config directories
+  file:
+    path: "/etc/vault.d/{{ item }}/"
+    state: directory
+  with_items:
+  - bootstrap
+  - server
+
+- name: Create vault config files
+  template:
+    src: "server.hcl.j2"
+    dest: "/etc/vault.d/server.hcl"
+    mode: 0644
+  notify:
+  - Restart vault
+
+- name: Add vault systemd unit
+  template:
+    src: vault.service.j2
+    dest: /etc/systemd/system/vault.service
+    mode: 0644
+  notify:
+  - Reload systemd
+  - Restart vault
