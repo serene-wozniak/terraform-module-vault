@@ -1,6 +1,7 @@
 {
   "server" : true,
   "bootstrap_expect" : {{ consul_node_count - 1 }},
+  "encrypt" : "{{ consul_encryption_key }}",
   "data_dir" : "{{ consul_data_dir }}",
   "advertise_addr" : "{{ ansible_eth0.ipv4.address }}",
   "bind_addr" : "{{ ansible_eth0.ipv4.address }}",
