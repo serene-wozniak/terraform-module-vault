@@ -5,7 +5,7 @@ Requires=network-online.target
 [Service]
 EnvironmentFile=-/etc/sysconfig/vault
 Environment=GOMAXPROCS=2
-ExecStart={{ vault_install_dir }}/vault server -config=/etc/vault.d/server
+ExecStart={{ vault_install_dir }}/vault server -config=/etc/vault.d
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 
