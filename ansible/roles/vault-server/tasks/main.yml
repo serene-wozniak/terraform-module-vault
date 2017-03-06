@@ -54,4 +54,4 @@
     mode: 0600
 
 - name: Run Postgres creation script
-  shell: PGPASSWORD={{vault_postgres_password}} psql -H {{vault_postgres_endpoint | replace(':5432','')}} -U {{vault_postgres_username}} vault -f /tmp/vaultsetup.sql
+  shell: PGPASSWORD={{vault_postgres_password}} psql -h {{vault_postgres_endpoint | replace(':5432','')}} -U {{vault_postgres_username}} vault -f /tmp/vaultsetup.sql
