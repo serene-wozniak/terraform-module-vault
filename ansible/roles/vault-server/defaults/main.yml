@@ -6,5 +6,5 @@ vault_download_checksum: "sha256:c9d414a63e9c4716bc9270d46f0a458f0e9660fd576efb1
 vault_download_dir: "/usr/local/src"
 vault_install_dir: "/usr/local/bin"
 vault_postgres_endpoint: "{{ansible_local.bootstrap.ansible.vault_postgres_endpoint}}"
-vault_postgres_username: "{{ansible_local.bootstrap.ansible.vault_postgres_usernme}}"
+vault_postgres_username: "{{ansible_local.bootstrap.ansible.vault_postgres_username}}"
 vault_postgres_password: "{{ansible_local.bootstrap.ansible.vault_postgres_password}}"
