@@ -1,0 +1,13 @@
+ha_backend "consul" {
+  address = "127.0.0.1:8500"
+  path    = "vault"
+}
+
+backend "postgresql" {
+  connection_url = "postgres://{{vault_postgres_username}}:{{vault_postgres_password}}@{{vault_postgres_host}}:{{vault_postgres_port}}/{{vault_postgres_databse}}?sslmode={{vault_postgres_ssl_mode}}"
+}
+
+listener "tcp" {
+  address     = "127.0.0.1:8200"
+  tls_disable = 1
+}

@@ -1,0 +1,13 @@
+[Unit]
+Description=vault server agent
+Requires=network-online.target
+
+[Service]
+EnvironmentFile=-/etc/sysconfig/vault
+Environment=GOMAXPROCS=2
+ExecStart={{ vault_install_dir }}/vault agent -config=/etc/vault.d/server
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
