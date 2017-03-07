@@ -4,6 +4,11 @@
     name: unzip
     state: latest
 
+- name: Create Vault User
+  user:
+    name: vault
+    home: /var/lib/vault
+
 - name: Download vault
   get_url:
     url: "{{ vault_download_url }}"
