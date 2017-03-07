@@ -25,6 +25,11 @@
     group: root
     mode: 0755
 
+- capabilities:
+    path: /{{ vault_install_dir }}/vault
+    capability: cap_ipc_lock=+ep
+    state: present
+
 - name: Create vault config directories
   file:
     path: "/etc/vault.d"
