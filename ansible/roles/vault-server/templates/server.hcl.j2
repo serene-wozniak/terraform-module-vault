@@ -9,5 +9,7 @@ backend "postgresql" {
 
 listener "tcp" {
   address     = "127.0.0.1:8200"
-  tls_disable = 1
+  tls_disable   = 1
+  tls_cert_file = "/var/lib/vault/certificate.pem"
+  tls_key_file  = "/var/lib/vault/key.pem"
 }
